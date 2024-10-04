@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Directores')}"></head>
+<body>
+<main>
+    <div class="container px-4 pb-5">
+        <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Directores')}"></nav>
+        <h1 class="pb-2 border-bottom">Lista Películas</h1>
+
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/director/new'}">Nuevo Director</a>
+
+        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+        <div th:if="${listaDirectores != null}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Nacionalidad</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="director, info : ${listaDirectores}">
+                    <td th:text="${info.index + 1}"></td>
+                    <td th:text="${director.nombre}"></td>
+                    <td th:text="${director.telefono}"></td>
+                    <td th:text="${director.nacionalidad}"></td>
+
+                    <td>
+                        <a class="btn btn-primary"
+                           th:href="@{'/director/edit' + '?directorId=' + ${director.directorId}}">Editar</a>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-danger"
+                           th:href="@{'/director/delete' + '?directorId=' + ${director.directorId}}"
+                           onclick="return confirm('¿Está seguro de que desea borrar este director?');">Borrar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${listaDirectores == null || #lists.isEmpty(listaDirectores)}" class="alert alert-warning">
+            No hay directores registrados.
+        </div>
+    </div>
+</main>
+
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

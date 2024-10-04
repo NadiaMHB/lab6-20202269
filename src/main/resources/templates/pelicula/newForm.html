@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Nueva Pelicula')}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Películas')}"></nav>
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <h2>Nueva Película</h2>
+            <div th:if="${errorCompany != null}" th:text="${errorCompany}" class="alert alert-danger"
+                 role="alert"></div>
+            <hr/>
+            <form method="post" th:action="@{'/pelicula/save'}">
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input name="titulo" type="text" class="form-control" id="titulo">
+                </div>
+                <div class="mb-3">
+                    <label for="fechaEstreno" class="form-label">Fecha de estreno</label>
+                    <input name="fechaEstreno" type="date" class="form-control" id="fechaEstreno">
+                </div>
+                <div class="mb-3">
+                    <label for="duracionMinutos" class="form-label">Duración en minutos</label>
+                    <input name="duracionMinutos" type="number" class="form-control" id="duracionMinutos">
+                </div>
+                <a th:href="@{'/pelicula/list'}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Películas')}"></head>
+<body>
+<main>
+    <div class="container px-4 pb-5">
+        <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Películas')}"></nav>
+        <h1 class="pb-2 border-bottom">Lista Películas</h1>
+
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/pelicula/new'}">Nueva Película</a>
+
+        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+        <div th:if="${listaPeliculas != null}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Fecha de estreno</th>
+                    <th>Duración (min)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pelicula, info : ${listaPeliculas}">
+                    <td th:text="${info.index + 1}"></td>
+                    <td th:text="${pelicula.titulo}"></td>
+                    <td th:text="${pelicula.fechaEstreno}"></td>
+                    <td th:text="${pelicula.duracionMinutos}"></td>
+
+                    <td>
+                        <a class="btn btn-primary"
+                           th:href="@{'/pelicula/edit' + '?peliculaId=' + ${pelicula.peliculaId}}">Editar</a>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-danger"
+                           th:href="@{'/pelicula/delete' + '?peliculaId=' + ${pelicula.peliculaId}}"
+                           onclick="return confirm('¿Está seguro de que desea borrar esta película?');">Borrar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${listaPeliculas == null || #lists.isEmpty(listaPeliculas)}" class="alert alert-warning">
+            No hay películas registradas.
+        </div>
+    </div>
+</main>
+
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

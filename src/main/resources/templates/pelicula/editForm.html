@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Pelicula')}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Películas')}"></nav>
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <h2 th:text="${product.id==0? 'Nueva Película':'Editar Película'}">Editar Películas</h2>
+            <hr/>
+            <div class="alert alert-danger" role="alert" th:if="${msg != null}" th:text="${msg}">
+                A simple success alert—check it out!
+            </div>
+            <form method="post" th:action="@{'/pelicula/save'}" th:object="${pelicula}">
+                <input th:field="*{peliculaId}" type="hidden"/>
+                <div class="mb-3">
+                    <label class="form-label">Título</label>
+                    <input th:field="*{titulo}" type="text" class="form-control"/>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Fecha de estreno</label>
+                    <input th:field="*{fechaEstreno}" type="date" class="form-control"/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Duración en minutos</label>
+                    <input th:field="*{duracionMinutos}" type="date" class="form-control"/>
+
+                </div>
+
+                <a th:href="@{'/pelicula/list'}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary"
+                        th:text="${pelicula.peliculaId==0? 'Guardar':'Actualizar'}">Actualizar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>
